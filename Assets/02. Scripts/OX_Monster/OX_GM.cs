@@ -15,7 +15,7 @@ public class OX_GM : MonoBehaviour
 
     public string ans;
     public static OX_GM instance { get { return Instance; } }
-
+    bool isDelayTime = true;
     List<Dictionary<string, object>> question; //= CSVReader.Read("quiz");
     // string[] dummy = {
     //     "이순신 장군 동상은 오른손에 칼을 쥐고있다?",
@@ -68,6 +68,7 @@ public class OX_GM : MonoBehaviour
         UI_M.instance.StartQuestion();
         index = Random.Range(0, 5);
         UI_M.instance.SetQuestion(question[index]["Question"].ToString());
+        isDelayTime = false;
 
         //UI_M에 문제 바꿔주고
 
@@ -136,6 +137,7 @@ public class OX_GM : MonoBehaviour
     }
     IEnumerator delay()
     {
+        isDelayTime = true;
         yield return new WaitForSeconds(3);
 
         StartQuestion();
@@ -144,11 +146,14 @@ public class OX_GM : MonoBehaviour
     {
         Time.timeScale = 0;
         PuasePanel.SetActive(true);
+        Character.GetComponent<CharacterMove>().isMovable = false;
     }
     public void Resume()
     {
         Time.timeScale = 1;
         PuasePanel.SetActive(false);
+        if (!isDelayTime)
+            Character.GetComponent<CharacterMove>().isMovable = true;
     }
     //답 틀린 들러리들 떨쳐내기
     public void Dropout()
@@ -161,10 +166,12 @@ public class OX_GM : MonoBehaviour
     {
         // Time.timeScale = 0;
         GameOverPanel.SetActive(true);
+        Character.GetComponent<CharacterMove>().isMovable = false;
         //Score 계산 , 순위비교 , 등
     }
     public void Lobby()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("00. Lobby");
     }
     public void ReStart()

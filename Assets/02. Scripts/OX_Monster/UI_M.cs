@@ -11,9 +11,12 @@ public class UI_M : MonoBehaviour
     public GameObject QuizTimer;
     public GameObject O_PanelBlur;
     public GameObject X_PanelBlur;
-
+    public GameObject Audio;
+    bool isAudioOn =true;
+    public Text AudioText;
     public float time;
     int dummyCount=0;
+
     
     //싱글톤
     private static UI_M Instance;
@@ -77,5 +80,16 @@ public class UI_M : MonoBehaviour
     public void EndQuestion()
     {
         // QuizTimer.SetActive(false);
+    }
+    public void AudioToggle(){
+        isAudioOn=!isAudioOn;
+        if(isAudioOn){
+            Audio.SetActive(true);
+            AudioText.text = "Sound Off";
+        }
+        else{
+            Audio.SetActive(false);
+            AudioText.text = "Sound On";
+        }
     }
 }

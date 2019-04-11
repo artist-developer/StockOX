@@ -11,6 +11,8 @@ public class CharacterMove : MonoBehaviour
     public GameObject colider_X;
     public bool isMovable = false;
     Vector3 gyroscope_rotation;
+
+
     // public Text Debug;
     void Awake()
     {
@@ -34,12 +36,19 @@ public class CharacterMove : MonoBehaviour
         gyroscope_rotation.x += Input.gyro.rotationRateUnbiased.x / 3;
         gyroscope_rotation.y += Input.gyro.rotationRateUnbiased.y / 3;
 
+        
         if (isMovable)
         {
-            //캐릭터 이동제한
+            if(gyroscope_rotation.y > 0 ){
+                go.transform.rotation = new Quaternion(0,0,0,0);
+            }else if(gyroscope_rotation.y < 0){
+                go.transform.rotation = new Quaternion(0,180,0,0);
+            }
+            // 캐릭터 이동제한
             if (go.transform.position.x > -500 && go.transform.position.x < 500)
             {
                 go.transform.position = new Vector3(go.transform.position.x + gyroscope_rotation.y, go.transform.position.y, go.transform.position.z);
+                // go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
             }
             else
             {
@@ -47,12 +56,47 @@ public class CharacterMove : MonoBehaviour
                 if (go.transform.position.x < -500 && gyroscope_rotation.y > 0)
                 {
                     go.transform.position = new Vector3(go.transform.position.x + gyroscope_rotation.y, go.transform.position.y, go.transform.position.z);
+                    // go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
                 }
                 else if (go.transform.position.x > 500 && gyroscope_rotation.y < 0)
                 {
                     go.transform.position = new Vector3(go.transform.position.x + gyroscope_rotation.y, go.transform.position.y, go.transform.position.z);
+                    // go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
                 }
             }
+            //  if (go.transform.position.x > -500 && go.transform.position.x < 500)
+            // {
+            //     // go.transform.position = new Vector3(go.transform.position.x + gyroscope_rotation.y, go.transform.position.y, go.transform.position.z);
+            //     go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
+            // }
+            // else
+            // {
+            //     //-500 ~ 500 으로 x 포지션 제한을 두었지만 update특성상 소수점차이로 넘는 경우 발생하는 것을 방지
+            //     if (go.transform.position.x < -500 && gyroscope_rotation.y > 0)
+            //     {
+            //         // go.transform.position = new Vector3(go.transform.position.x + gyroscope_rotation.y, go.transform.position.y, go.transform.position.z);
+            //         go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
+            //     }
+            //     else if (go.transform.position.x > 500 && gyroscope_rotation.y < 0)
+            //     {
+            //         // go.transform.position = new Vector3(go.transform.position.x + gyroscope_rotation.y, go.transform.position.y, go.transform.position.z);
+            //         go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
+            //     }
+            // }
         }
+    }
+    float DistanceCalulation(float gyro){
+        float result=0f;
+        if(gyro < -2.3 ) gyro = 2.3f;
+        else if(gyro > 7.7){
+            gyro = 7.7f;
+        };
+
+        gyro-=-2.3f;
+        result = ((1000*gyro)/10)-500;
+        //  -2.3       3.2       7.7  => 10
+        //  -500       0         500  => 1000
+
+        return result;
     }
 }
