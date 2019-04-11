@@ -10,9 +10,9 @@ public class CharacterMove : MonoBehaviour
     public GameObject colider_O;
     public GameObject colider_X;
     public bool isMovable = false;
-    Vector3 gyroscope_rotation;
+    public Vector3 gyroscope_rotation;
 
-
+    float prevValue =0;
     // public Text Debug;
     void Awake()
     {
@@ -34,10 +34,11 @@ public class CharacterMove : MonoBehaviour
     {
         //자이로 
         gyroscope_rotation.x += Input.gyro.rotationRateUnbiased.x / 3;
+        if(Mathf.Abs(Input.gyro.rotationRateUnbiased.y) > 0.001 )
         gyroscope_rotation.y += Input.gyro.rotationRateUnbiased.y / 3;
-
         
-        if (isMovable)
+        
+        if (isMovable && prevValue!=Input.gyro.rotationRateUnbiased.y)
         {
             if(gyroscope_rotation.y > 0 ){
                 go.transform.rotation = new Quaternion(0,0,0,0);
@@ -83,6 +84,7 @@ public class CharacterMove : MonoBehaviour
             //         go.transform.position = new Vector3(DistanceCalulation(gyroscope_rotation.y), go.transform.position.y, go.transform.position.z);
             //     }
             // }
+            prevValue = Input.gyro.rotationRateUnbiased.y;
         }
     }
     float DistanceCalulation(float gyro){

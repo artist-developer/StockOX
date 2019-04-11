@@ -61,7 +61,7 @@ public class OX_GM : MonoBehaviour
     //문제시작
     public void StartQuestion()
     {
-
+        Character.GetComponent<CharacterMove>().gyroscope_rotation = new Vector3(0,0,0);
         O_Panel.SetActive(false);
         X_Panel.SetActive(false);
         //문제타이머 set
