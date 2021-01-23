@@ -75,7 +75,7 @@ public class UI_M : MonoBehaviour
     public void StartQuestion()
     {
         QuizTimer.GetComponent<QuizTimer>().TimerStart();
-        QuizTimer.GetComponent<QuizTimer>().count = 5;
+        QuizTimer.GetComponent<QuizTimer>().count = 3;
     }
     public void EndQuestion()
     {

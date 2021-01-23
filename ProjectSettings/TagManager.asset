@@ -4,8 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Item
-  - Bird
+  - Dinamond
+  - Boost
+  - Boost II
+  - Path
+  - Falling
+  - NextLevel
   layers:
   - Default
   - TransparentFX

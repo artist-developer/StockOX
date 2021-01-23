@@ -1,0 +1,23 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\02. Scripts\Tilitingmon\StartManager.cs">
+    <Files>
+      <File FileName="Assets\02. Scripts\LobbyManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\StartManager.cs" Line="50" Column="23" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\MainManager.cs" Line="37" Column="25" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\CharacterCtrl.cs" Line="7" Column="33" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\ItemSpawner.cs" Line="26" Column="49" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\GyroscopeInputToggle.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\ItemCtrl.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\GyroCtrl.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\Tilitingmon\GameOverCtrl.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\ObjectPool.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\PooledObject.cs" Line="1" Column="1" />
+      <File FileName="Assets\02. Scripts\Singleton.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

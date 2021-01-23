@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/00. Lobby.unity
     guid: 193afe191690cc84fa57100b24935336
-  - enabled: 1
+  - enabled: 0
     path: Assets/01. Scenes/01. TiltingmonStart.unity
     guid: afc3b84c0cd98d745ba8c43f51fd7d52
-  - enabled: 1
+  - enabled: 0
     path: Assets/01. Scenes/02. Tiltingmon.unity
     guid: 08ed77a5ed4463341a3de29851c28506
   - enabled: 1
@@ -20,4 +20,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/03. OX_MonsterStart.unity
     guid: 9d5daac1de24948888c7511f337d3525
+  - enabled: 0
+    path: Assets/ROLLING BALL 3D/_Scene/Flash.unity
+    guid: 9418e754e788c5a458c1f9f157af469a
+  - enabled: 0
+    path: Assets/ROLLING BALL 3D/_Scene/Playing.unity
+    guid: ca184cd226c930b4593d6123abe6e44f
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

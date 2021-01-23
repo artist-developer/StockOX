@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class OX_GM : MonoBehaviour
 {
@@ -9,10 +10,10 @@ public class OX_GM : MonoBehaviour
     List<GameObject> failer;
     public GameObject O_Panel;
     public GameObject X_Panel;
-    public GameObject PuasePanel;
+    public GameObject PausePanel;
     public GameObject GameOverPanel;
     private static OX_GM Instance;
-
+    
     public string ans;
     public static OX_GM instance { get { return Instance; } }
     bool isDelayTime = true;
@@ -61,7 +62,7 @@ public class OX_GM : MonoBehaviour
     //문제시작
     public void StartQuestion()
     {
-        Character.GetComponent<CharacterMove>().gyroscope_rotation = new Vector3(0,0,0);
+        // Character.GetComponent<CharacterMove>().gyroscope_rotation = new Vector3(0,0,0);
         O_Panel.SetActive(false);
         X_Panel.SetActive(false);
         //문제타이머 set
@@ -80,7 +81,6 @@ public class OX_GM : MonoBehaviour
         {
             g.GetComponent<AIMove>().Move();
         }
-
     }
     //StartQuestion 에서 켠 타이머가 꺼지면서 호출할거임.
     public void EndQuestion()
@@ -115,9 +115,7 @@ public class OX_GM : MonoBehaviour
             {
                 if (g.GetComponent<AIMove>().ans != question[index]["answer"].ToString())
                 {
-
                     failer.Add(g);
-
                 }
             }
             foreach (GameObject g in failer)
@@ -130,10 +128,8 @@ public class OX_GM : MonoBehaviour
         else
         {
             GameOver();
+            
         }
-
-
-
     }
     IEnumerator delay()
     {
@@ -142,16 +138,16 @@ public class OX_GM : MonoBehaviour
 
         StartQuestion();
     }
-    public void Puase()
+    public void Pause()
     {
         Time.timeScale = 0;
-        PuasePanel.SetActive(true);
+        PausePanel.SetActive(true);
         Character.GetComponent<CharacterMove>().isMovable = false;
     }
     public void Resume()
     {
         Time.timeScale = 1;
-        PuasePanel.SetActive(false);
+        PausePanel.SetActive(false);
         if (!isDelayTime)
             Character.GetComponent<CharacterMove>().isMovable = true;
     }
@@ -166,6 +162,7 @@ public class OX_GM : MonoBehaviour
     {
         // Time.timeScale = 0;
         GameOverPanel.SetActive(true);
+        GameOverPanel.transform.GetChild(0).GetComponent<Text>().text = "Gameover\n Your highscore is : "+UI_M.instance.Score.text+"\n";
         Character.GetComponent<CharacterMove>().isMovable = false;
         //Score 계산 , 순위비교 , 등
     }

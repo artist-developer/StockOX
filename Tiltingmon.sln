@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiltingmon", "Assembly-CSharp.csproj", "{240C1D81-8315-3812-7548-EADE18F4B376}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiltingmon", "Assembly-CSharp-firstpass.csproj", "{511EBA41-383D-F485-2AF4-CC49DA912286}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{240C1D81-8315-3812-7548-EADE18F4B376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240C1D81-8315-3812-7548-EADE18F4B376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240C1D81-8315-3812-7548-EADE18F4B376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240C1D81-8315-3812-7548-EADE18F4B376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{511EBA41-383D-F485-2AF4-CC49DA912286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{511EBA41-383D-F485-2AF4-CC49DA912286}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{511EBA41-383D-F485-2AF4-CC49DA912286}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{511EBA41-383D-F485-2AF4-CC49DA912286}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
