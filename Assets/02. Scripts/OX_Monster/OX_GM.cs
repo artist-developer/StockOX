@@ -17,7 +17,8 @@ public class OX_GM : MonoBehaviour
     public string ans;
     public static OX_GM instance { get { return Instance; } }
     bool isDelayTime = true;
-    List<Dictionary<string, object>> question; //= CSVReader.Read("quiz");
+    [SerializeField]
+    List<Dictionary<string, object>> question = new List<Dictionary<string, object>>(); //= CSVReader.Read("quiz");
     // string[] dummy = {
     //     "이순신 장군 동상은 오른손에 칼을 쥐고있다?",
     //     "달팽이도 이빨이 있다?",
@@ -38,7 +39,17 @@ public class OX_GM : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        question = CSVReader.Read("quiz");
+        // Question
+        // answer
+        // question = CSVReader.Read("quiz");
+        
+        foreach (var item in APIHelper.instance.quizList)
+        {
+            var entry = new Dictionary<string, object>();
+            entry["Question"] = item.problem;
+            entry["answer"] = item.is_true;
+            question.Add(entry);
+        }
         StartCoroutine(delay());
         
     }

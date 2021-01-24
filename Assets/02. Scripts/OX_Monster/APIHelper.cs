@@ -47,7 +47,21 @@ public class APIHelper  : MonoBehaviour
                 Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
 
                 string s = webRequest.downloadHandler.text;
-                Debug.Log(s);
+                string [] s_list = s.Substring(1, s.Length-2).Split('}');
+                
+                uint index = 0;
+                foreach (var item in s_list)
+                {
+                    if(String.IsNullOrEmpty(item)) break ;
+                    
+                    if(index==0){
+                        quizList.Add(JsonUtility.FromJson<Quiz>(item+"}"));
+                    }
+                    else{                                                
+                        quizList.Add(JsonUtility.FromJson<Quiz>(item.Substring(1, item.Length-1)+"}"));
+                    }
+                    index++;
+                }
                 // quizList = JsonUtility.FromJson<Quiz>(s);
             }
         }
