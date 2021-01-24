@@ -125,11 +125,12 @@ public class APIHelper  : MonoBehaviour
     }
      void DropdownValueChanged(Dropdown change)
     {
+        Debug.Log(change.value);
         if(change.value ==0){
             company_code = "none";    
         }
         else{
-            company_code = cl[change.value].company_id;
+            company_code = cl[change.value-1].company_id;
             StartCoroutine(Quiz_GetMethod());
         }
         

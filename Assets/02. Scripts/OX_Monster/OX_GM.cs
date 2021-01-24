@@ -47,7 +47,13 @@ public class OX_GM : MonoBehaviour
         {
             var entry = new Dictionary<string, object>();
             entry["Question"] = item.problem;
-            entry["answer"] = item.is_true;
+            if(item.is_true){
+entry["answer"] = "O";
+            }
+            else{
+entry["answer"] = "X";
+            }
+            
             question.Add(entry);
         }
         StartCoroutine(delay());
