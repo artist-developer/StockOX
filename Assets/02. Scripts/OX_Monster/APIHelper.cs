@@ -2,18 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class APIHelper
+public class APIHelper  : MonoBehaviour
 {
     public string companyList_url = "http://54.180.26.193:8080/companyList";
     public string price_url = "http://3.36.75.50:3000/getProblem?company_id=";
     public string company_code;
-    public List<Company> companyList = new List<Company>();
+    // public List<Company> companyList = new List<Company>();
+    // public Company[] companyList;
+    public List<Company> cl = new List<Company>();
     public List<Quiz> quizList = new List<Quiz>();
 
-      private static OX_GM Instance;
-          public static OX_GM instance { get { return Instance; } }
+      private static APIHelper Instance;
+          public static APIHelper instance { get { return Instance; } }
              void Awake()
     {
         if (Instance == null)
@@ -35,42 +38,89 @@ public class APIHelper
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
 
-            if (request.isNetworkError || request.isHttpError)
+            if (webRequest.isNetworkError || webRequest.isHttpError)
             {
-                Debug.Log(request.error);
+                Debug.Log(webRequest.error);
             }
             else
             {
                 Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
 
                 string s = webRequest.downloadHandler.text;
-                quizList = JsonUtility.FromJson<Quiz>(s);
+                Debug.Log(s);
+                // quizList = JsonUtility.FromJson<Quiz>(s);
             }
         }
     }
 
-    public IEnumerator CompanyList_GetMethod()
+    public void CompanyList_GetMethod(){
+        StartCoroutine(APIHelper.instance.CompanyList_couroutine());
+    }
+    public IEnumerator CompanyList_couroutine()
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(companyList_url))
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
 
-            if (request.isNetworkError || request.isHttpError)
+            if (webRequest.isNetworkError || webRequest.isHttpError)
             {
-                Debug.Log(request.error);
+                Debug.Log(webRequest.error);
             }
             else
             {
-                Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+                // Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+
 
                 string s = webRequest.downloadHandler.text;
-                companyList = JsonUtility.FromJson<Company>(s);
+                
+
+    
+                string [] s_list = s.Substring(1, s.Length-2).Split('}');
+                
+                uint index = 0;
+                foreach (var item in s_list)
+                {
+                    if(String.IsNullOrEmpty(item)) break ;
+                    
+                    if(index==0){
+                        cl.Add(JsonUtility.FromJson<Company>(item+"}"));
+                    }
+                    else{                                                
+                        cl.Add(JsonUtility.FromJson<Company>(item.Substring(1, item.Length-1)+"}"));
+                    }
+                    index++;
+                }
+            Dropdown dropdown= GameObject.Find("Dropdown").GetComponent<Dropdown>();
+
+	        List<string> dropdownOptions = new List<string>();
+            foreach (var item in cl)
+            {
+                dropdownOptions.Add(item.company_name + " ("+item.company_id+")");
             }
-        }
+        	dropdown.AddOptions(dropdownOptions);
+             dropdown.onValueChanged.AddListener(delegate {
+            DropdownValueChanged(dropdown);
+        });
+
+
+    
+               
+            }
+        }                
+    }
+     void DropdownValueChanged(Dropdown change)
+    {
+        company_code = cl[change.value].company_id;
+        StartCoroutine(Quiz_GetMethod());
     }
 }
 
+// [System.Serializable]
+// public class CompanyList
+// {
+//     public Company[] list;
+// }
 [System.Serializable]
 public class Company
 {

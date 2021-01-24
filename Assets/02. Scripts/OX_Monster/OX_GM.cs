@@ -40,6 +40,7 @@ public class OX_GM : MonoBehaviour
     {
         question = CSVReader.Read("quiz");
         StartCoroutine(delay());
+        
     }
     void Update()
     {
