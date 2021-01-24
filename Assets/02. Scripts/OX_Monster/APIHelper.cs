@@ -9,7 +9,7 @@ public class APIHelper  : MonoBehaviour
 {
     public string companyList_url = "http://54.180.26.193:8080/companyList";
     public string price_url = "http://3.36.75.50:3000/getProblem?company_id=";
-    public string company_code;
+    public string company_code = "none";
     // public List<Company> companyList = new List<Company>();
     // public Company[] companyList;
     public List<Company> cl = new List<Company>();
@@ -125,8 +125,14 @@ public class APIHelper  : MonoBehaviour
     }
      void DropdownValueChanged(Dropdown change)
     {
-        company_code = cl[change.value].company_id;
-        StartCoroutine(Quiz_GetMethod());
+        if(change.value ==0){
+            company_code = "none";    
+        }
+        else{
+            company_code = cl[change.value].company_id;
+            StartCoroutine(Quiz_GetMethod());
+        }
+        
     }
 }
 

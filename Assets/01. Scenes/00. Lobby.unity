@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   companyList_url: http://54.180.26.193:8080/companyList
   price_url: http://3.36.75.50:3000/getProblem?company_id=
-  company_code: 
+  company_code: none
   cl: []
   quizList: []
 --- !u!4 &1254006444
