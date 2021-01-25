@@ -15,9 +15,10 @@ public class APIHelper  : MonoBehaviour
     public List<Company> cl = new List<Company>();
     public List<Quiz> quizList = new List<Quiz>();
 
-      private static APIHelper Instance;
-          public static APIHelper instance { get { return Instance; } }
-             void Awake()
+    private static APIHelper Instance;
+    public static APIHelper instance { get { return Instance; } }
+    
+    void Awake()
     {
         if (Instance == null)
         {
@@ -26,13 +27,21 @@ public class APIHelper  : MonoBehaviour
             
         }
     }
+
     public void Set_companyCode(string _code)
     {
         company_code = _code;
     }
 
+    public int Get_quiz_totalCount()
+    {        
+        Debug.Log("quizList Count : " + quizList.Count);
+        return quizList.Count;
+    }
+
     public IEnumerator Quiz_GetMethod()
     {
+        quizList.Clear();
         using (UnityWebRequest webRequest = UnityWebRequest.Get(price_url + company_code))
         {
             // Request and wait for the desired page.
@@ -70,6 +79,7 @@ public class APIHelper  : MonoBehaviour
     public void CompanyList_GetMethod(){
         StartCoroutine(APIHelper.instance.CompanyList_couroutine());
     }
+
     public IEnumerator CompanyList_couroutine()
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(companyList_url))
@@ -83,13 +93,7 @@ public class APIHelper  : MonoBehaviour
             }
             else
             {
-                // Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
-
-
-                string s = webRequest.downloadHandler.text;
-                
-
-    
+                string s = webRequest.downloadHandler.text;    
                 string [] s_list = s.Substring(1, s.Length-2).Split('}');
                 
                 uint index = 0;
@@ -113,19 +117,13 @@ public class APIHelper  : MonoBehaviour
                 dropdownOptions.Add(item.company_name + " ("+item.company_id+")");
             }
         	dropdown.AddOptions(dropdownOptions);
-             dropdown.onValueChanged.AddListener(delegate {
-            DropdownValueChanged(dropdown);
-        });
-
-
-    
-               
+            dropdown.onValueChanged.AddListener(delegate{DropdownValueChanged(dropdown);});
             }
         }                
     }
-     void DropdownValueChanged(Dropdown change)
+    
+    void DropdownValueChanged(Dropdown change)
     {
-        Debug.Log(change.value);
         if(change.value ==0){
             company_code = "none";    
         }
@@ -133,15 +131,9 @@ public class APIHelper  : MonoBehaviour
             company_code = cl[change.value-1].company_id;
             StartCoroutine(Quiz_GetMethod());
         }
-        
     }
 }
 
-// [System.Serializable]
-// public class CompanyList
-// {
-//     public Company[] list;
-// }
 [System.Serializable]
 public class Company
 {

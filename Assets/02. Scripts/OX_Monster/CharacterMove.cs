@@ -17,7 +17,6 @@ public class CharacterMove : MonoBehaviour
     void Awake()
     {
         go = GameObject.Find("Character");
-        Input.gyro.enabled = true;
     }
     void OnTriggerEnter2D(Collider2D other)
     {

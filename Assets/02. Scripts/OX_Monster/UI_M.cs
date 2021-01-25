@@ -7,7 +7,6 @@ public class UI_M : MonoBehaviour
 {
     public Text question;
     public Text Score;
-    public Text PlayTimer;
     public GameObject QuizTimer;
     public GameObject O_PanelBlur;
     public GameObject X_PanelBlur;
@@ -15,12 +14,13 @@ public class UI_M : MonoBehaviour
     bool isAudioOn =true;
     public Text AudioText;
     public float time;
-    int dummyCount=0;
+    int dummyCount = 0;
 
-    
+    int currentScore = 0;
+    int currentTotalQuestionCount;
+
     //싱글톤
     private static UI_M Instance;
-
     public static UI_M instance { get { return Instance; } }
 
     void Awake()
@@ -33,31 +33,42 @@ public class UI_M : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Score.text = "0";
-
+        Score.text = currentScore + " / " + currentTotalQuestionCount;
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        PlayTimer.text = string.Format("{0:N2}", time);
     }
+
     //문제변경
     public void SetQuestion(string s)
     {
         question.text = s;
     }
+
     //점수 초기화할때나 필요할때 쓸거임
     public void SetScore(string s)
     {
         Score.text = s;
     }
+
+    //현재 총 문제 수
+    public void AddTotalQuestionCount(int num)
+    {        
+        currentTotalQuestionCount = currentTotalQuestionCount + num;
+
+        Score.text = currentScore + " / " + currentTotalQuestionCount;
+    }
+
     //점수더하기 게임매니저에서 불러서 쓸거임
     public void AddScore(int num)
     {
-        Score.text = (int.Parse(Score.text) + num).ToString();
+        currentScore += num;
+        Score.text = currentScore + " / " + currentTotalQuestionCount;
     }
+
+    //플레이어가 O를 선택
     public void O_Choose()
     {
 		OX_GM.instance.O_Choose();
@@ -72,15 +83,17 @@ public class UI_M : MonoBehaviour
         O_PanelBlur.SetActive(false);
         X_PanelBlur.SetActive(true);
     }
+
     public void StartQuestion()
     {
-        QuizTimer.GetComponent<QuizTimer>().TimerStart();
         QuizTimer.GetComponent<QuizTimer>().count = 3;
+        QuizTimer.GetComponent<QuizTimer>().TimerStart();
     }
+
     public void EndQuestion()
     {
-        // QuizTimer.SetActive(false);
     }
+
     public void AudioToggle(){
         isAudioOn=!isAudioOn;
         if(isAudioOn){

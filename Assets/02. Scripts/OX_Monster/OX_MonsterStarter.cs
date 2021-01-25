@@ -22,6 +22,6 @@ public class OX_MonsterStarter : MonoBehaviour {
 	}
 	public void onChangeDropdownvalue(int value){
 		Debug.Log(value);
-		APIHelper.instance.company_code=value+"";
+		APIHelper.instance.company_code = value + "";
 	}
 }
