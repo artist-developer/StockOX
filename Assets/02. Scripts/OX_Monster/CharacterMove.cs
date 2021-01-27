@@ -12,8 +12,6 @@ public class CharacterMove : MonoBehaviour
     public float speed = 300f;
     public bool isMovable = true;
 
-    float prevValue =0;
-    // public Text Debug;
     void Awake()
     {
         go = GameObject.Find("Character");
@@ -22,11 +20,11 @@ public class CharacterMove : MonoBehaviour
     {
         if (other.gameObject.name == "O")
         {
-            UI_M.instance.O_Choose();
+            QuizManager.instance.O_Choose();
         }
         else
         {
-            UI_M.instance.X_Choose();
+            QuizManager.instance.X_Choose();
         }
     }
     void Update()

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 106164715}
   - component: {fileID: 106164717}
   m_Layer: 5
-  m_Name: Game2
+  m_Name: GameStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ RectTransform:
   m_Children:
   - {fileID: 369384007}
   m_Father: {fileID: 1174295299}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -282,11 +282,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1174295299}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -576, y: 302}
+  m_AnchoredPosition: {x: -575.9999, y: 301.99994}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &282307444
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329166354}
+      - m_Target: {fileID: 2030673582}
         m_MethodName: AudioOn
         m_Mode: 1
         m_Arguments:
@@ -449,7 +449,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: START
+  m_Text: "SET\n &\nSTART"
 --- !u!222 &369384009
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -534,6 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017834648}
   - component: {fileID: 1017834649}
+  - component: {fileID: 1017834650}
   m_Layer: 0
   m_Name: BGMAudio
   m_TagString: Untagged
@@ -565,11 +566,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ec38bc3946c11454daf64f4c44224d4e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -651,6 +652,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1017834650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017834647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4217594964524ed459d038c2d4ae28ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1041686280
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +768,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128871783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -764,7 +777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -576, y: 302}
+  m_AnchoredPosition: {x: -575.9999, y: 301.99994}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1128871785
@@ -847,7 +860,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329166354}
+      - m_Target: {fileID: 2030673582}
         m_MethodName: AudioOff
         m_Mode: 1
         m_Arguments:
@@ -950,10 +963,10 @@ RectTransform:
   m_Children:
   - {fileID: 1633929973}
   - {fileID: 2032972507}
-  - {fileID: 106164714}
   - {fileID: 2004216390}
-  - {fileID: 1128871784}
   - {fileID: 282307443}
+  - {fileID: 1128871784}
+  - {fileID: 106164714}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1051,7 +1064,7 @@ GameObject:
   - component: {fileID: 1254006444}
   - component: {fileID: 1254006443}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: APIHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1069,11 +1082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a52f39072b1c0645be5a2069e748445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  companyList_url: http://54.180.26.193:8080/companyList
-  price_url: http://3.36.75.50:3000/getProblem?company_id=
-  company_code: none
   cl: []
   quizList: []
+  newsList: []
 --- !u!4 &1254006444
 Transform:
   m_ObjectHideFlags: 0
@@ -1114,12 +1125,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1329166353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef22d7037d9e324a933c7a668996390, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d89cce30690b124b9daf9581a6b6183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainmenuAnim: {fileID: 0}
-  help: {fileID: 0}
-  reset: {fileID: 0}
   quit: {fileID: 2004216389}
   bgmAudio: {fileID: 1017834649}
   audioOn: {fileID: 1128871783}
@@ -1244,11 +1252,11 @@ RectTransform:
   m_Children:
   - {fileID: 1041686281}
   m_Father: {fileID: 1174295299}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 564, y: 302}
+  m_AnchoredPosition: {x: 563.9999, y: 301.99994}
   m_SizeDelta: {x: 120, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2004216391
@@ -1294,7 +1302,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329166354}
+      - m_Target: {fileID: 2030673582}
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -1433,6 +1441,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2030673581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2030673583}
+  - component: {fileID: 2030673582}
+  m_Layer: 0
+  m_Name: OptionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2030673582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030673581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4356a91d102234991fd5e1a3fc18eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quit: {fileID: 2004216389}
+  audioOn: {fileID: 1128871783}
+  audioOff: {fileID: 282307442}
+--- !u!4 &2030673583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030673581}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: -2, z: 349.2698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2032972506
 GameObject:

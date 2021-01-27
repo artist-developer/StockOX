@@ -20,11 +20,10 @@ public class OX_GM : MonoBehaviour
 
     public string ans;
     public static OX_GM instance { get { return Instance; } }
-    bool isDelayTime = true;
+
     [SerializeField]
     List<Dictionary<string, object>> question = new List<Dictionary<string, object>>();
 
-    int index = 0;
     void Awake()
     {
         if (Instance == null)
@@ -35,27 +34,39 @@ public class OX_GM : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        TruePanel = GameObject.Find("AnswerPanel_TRUE").transform.GetChild(0).gameObject;
-        FalsePanel = GameObject.Find("AnswerPanel_FALSE").transform.GetChild(0).gameObject;
+        //Debug.Log("QuizCount : " + totalQuizCount);
+        // if(totalQuizCount == 0)
+        // {
+        //     StartCoroutine(GameOver());
+        // }
 
-        totalQuizCount = APIHelper.instance.Get_quiz_totalCount();        
-        Debug.Log("TotalQuestionCount : " + totalQuizCount);
+        //else
+        //{
+            TruePanel = GameObject.Find("AnswerPanel_TRUE").transform.GetChild(0).gameObject;
+            FalsePanel = GameObject.Find("AnswerPanel_FALSE").transform.GetChild(0).gameObject;
 
-        foreach (var item in APIHelper.instance.quizList)
-        {
-            var entry = new Dictionary<string, object>();
-            entry["Question"] = item.problem;
-            if(item.is_true){
-                entry["answer"] = "O";
+            totalQuizCount = APIHelper.instance.Get_quiz_totalCount();
+
+            foreach (var item in APIHelper.instance.quizList)
+            {
+                var entry = new Dictionary<string, object>();
+                entry["Question"] = item.problem;
+                if(item.is_true){
+                    entry["answer"] = "O";
+                }
+                else{
+                    entry["answer"] = "X";
+                }
+                
+                question.Add(entry);
             }
-            else{
-                entry["answer"] = "X";
-            }
-            
-            question.Add(entry);
-        }
-        StartCoroutine(delay());        
+
+            OptionManager.instance.SetQuizEventAudio();
+
+            StartCoroutine(delay());
+        //}
     }
+    
     void Update()
     {
 
@@ -67,13 +78,13 @@ public class OX_GM : MonoBehaviour
         ans = "O";
         //O 를 기록
     }
-
     //플레이어가 X를 선택
     public void X_Choose()
     {
         ans = "X";
         //X 를 기록
     }
+
     //문제시작
     public void StartQuestion()
     {
@@ -83,12 +94,10 @@ public class OX_GM : MonoBehaviour
         X_Panel.SetActive(false);
 
         //문제타이머 set
-        UI_M.instance.StartQuestion();
-        index = Random.Range(0, totalQuizCount);
-        UI_M.instance.SetQuestion(question[index]["Question"].ToString());
-        isDelayTime = false;
+        QuizManager.instance.StartQuestion();
+        QuizManager.instance.SetQuestion(question[currentQuizCount]["Question"].ToString());
 
-        //UI_M에 문제 바꿔주고
+        //QuizManager에 문제 바꿔주고
         //캐릭터 이동가능하게
         Character.GetComponent<CharacterMove>().isMovable = true;
     }
@@ -97,24 +106,20 @@ public class OX_GM : MonoBehaviour
     {
         failer = new List<GameObject>();
 
-        if (question[index]["answer"].ToString() == "O")
+        //정답!
+        if(question[currentQuizCount]["answer"].ToString() == ans)
         {
-            Debug.Log("정답" + question[index]["answer"].ToString());
-            
             TruePanel.SetActive(true);
+            OptionManager.instance.PlayRightAnswerAudio();
+            QuizManager.instance.AddScore(1); 
         }
+        //오답!
         else
         {
-            Debug.Log("정답" + question[index]["answer"].ToString());
-
+            OptionManager.instance.PlayWrongAnswerAudio();
             FalsePanel.SetActive(true);
         }
-
-        if(question[index]["answer"] == ans)
-        {
-            UI_M.instance.AddScore(1);
-        }
-        UI_M.instance.AddTotalQuestionCount(1);
+        QuizManager.instance.AddTotalQuestionCount(1);
 
         //캐릭터 이동불가능하게
         Character.GetComponent<CharacterMove>().isMovable = false;        
@@ -133,7 +138,6 @@ public class OX_GM : MonoBehaviour
 
     IEnumerator delay()
     {
-        isDelayTime = true;
         yield return new WaitForSeconds(3);
 
         StartQuestion();
@@ -142,16 +146,30 @@ public class OX_GM : MonoBehaviour
     IEnumerator GameOver()
     {
         yield return new WaitForSeconds(2);
+
+        Character.GetComponent<CharacterMove>().isMovable = false;
         TruePanel.SetActive(false);
         FalsePanel.SetActive(false);
+        
+        string news_info = "";
+        foreach (var item in APIHelper.instance.newsList)
+        {
+            news_info += item.title;
+            news_info += "\n";
+        }
+
+        GameOverPanel.transform.GetChild(0).GetComponent<Text>().text 
+            = "Your highscore is : "+ QuizManager.instance.Score.text + "\n\n" 
+            + "<기업 관련 뉴스>\n" + news_info;
+        GameOverPanel.transform.GetChild(0).GetComponent<Text>().fontSize = 25;
+        
+        yield return new WaitForSeconds(1);
+
         GameOverPanel.SetActive(true);
-        GameOverPanel.transform.GetChild(0).GetComponent<Text>().text = "Gameover\n Your highscore is : "+ UI_M.instance.Score.text+"\n";
-        Character.GetComponent<CharacterMove>().isMovable = false;
-        //Score 츨력
     }
     public void Lobby()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("00. Lobby");
+		SceneManager.LoadScene("03. OX_MonsterStart");
     }
 }

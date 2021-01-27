@@ -7,13 +7,17 @@ using UnityEngine.Networking;
 
 public class APIHelper  : MonoBehaviour
 {
-    public string companyList_url = "http://54.180.26.193:8080/companyList";
-    public string price_url = "http://3.36.75.50:3000/getProblem?company_id=";
-    public string company_code = "none";
-    // public List<Company> companyList = new List<Company>();
-    // public Company[] companyList;
+    static string ip = "http://54.180.153.40:3000";
+
+    string companyList_url = ip + "/companyList";
+    string price_url = ip + "/getProblem?company_id=";
+    string news_url = ip + "/title?company_name=";
+    string company_code = "none";
+    string company_name = "none";
+
     public List<Company> cl = new List<Company>();
     public List<Quiz> quizList = new List<Quiz>();
+    public List<CompanyNews> newsList = new List<CompanyNews>();
 
     private static APIHelper Instance;
     public static APIHelper instance { get { return Instance; } }
@@ -23,14 +27,13 @@ public class APIHelper  : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
-            
+            DontDestroyOnLoad(this);            
         }
     }
 
-    public void Set_companyCode(string _code)
+    public string GetSelectedCompanyCode()
     {
-        company_code = _code;
+        return company_code;
     }
 
     public int Get_quiz_totalCount()
@@ -39,10 +42,10 @@ public class APIHelper  : MonoBehaviour
         return quizList.Count;
     }
 
-    public IEnumerator Quiz_GetMethod()
+    public IEnumerator News_GetMethod()
     {
-        quizList.Clear();
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(price_url + company_code))
+        newsList.Clear();
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(news_url + company_name))
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
@@ -64,6 +67,43 @@ public class APIHelper  : MonoBehaviour
                     if(String.IsNullOrEmpty(item)) break ;
                     
                     if(index==0){
+                        newsList.Add(JsonUtility.FromJson<CompanyNews>(item+"}"));
+                    }
+                    else{                                                
+                        newsList.Add(JsonUtility.FromJson<CompanyNews>(item.Substring(1, item.Length-1)+"}"));
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+
+    public IEnumerator Quiz_GetMethod()
+    {
+        quizList.Clear();
+        Debug.Log("Quiz_GetMethod started");
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(price_url + company_code))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError || webRequest.isHttpError)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+                Debug.Log(":\nQuiz_GetMethod Received: " + webRequest.downloadHandler.text);
+
+                string s = webRequest.downloadHandler.text;
+                string [] s_list = s.Substring(1, s.Length-2).Split('}');
+                
+                uint index = 0;
+                foreach (var item in s_list)
+                {
+                    if(String.IsNullOrEmpty(item)) break ;
+                    
+                    if(index==0){
                         quizList.Add(JsonUtility.FromJson<Quiz>(item+"}"));
                     }
                     else{                                                
@@ -71,7 +111,6 @@ public class APIHelper  : MonoBehaviour
                     }
                     index++;
                 }
-                // quizList = JsonUtility.FromJson<Quiz>(s);
             }
         }
     }
@@ -89,7 +128,7 @@ public class APIHelper  : MonoBehaviour
 
             if (webRequest.isNetworkError || webRequest.isHttpError)
             {
-                Debug.Log(webRequest.error);
+                Debug.Log("Get CompanyList : " + webRequest.error);
             }
             else
             {
@@ -114,7 +153,7 @@ public class APIHelper  : MonoBehaviour
 	        List<string> dropdownOptions = new List<string>();
             foreach (var item in cl)
             {
-                dropdownOptions.Add(item.company_name + " ("+item.company_id+")");
+                dropdownOptions.Add(item.companyName + " ("+item.companyId+")");
             }
         	dropdown.AddOptions(dropdownOptions);
             dropdown.onValueChanged.AddListener(delegate{DropdownValueChanged(dropdown);});
@@ -128,8 +167,10 @@ public class APIHelper  : MonoBehaviour
             company_code = "none";    
         }
         else{
-            company_code = cl[change.value-1].company_id;
+            company_code = cl[change.value-1].companyId;
+            company_name = cl[change.value-1].companyName;
             StartCoroutine(Quiz_GetMethod());
+            StartCoroutine(News_GetMethod());
         }
     }
 }
@@ -137,8 +178,8 @@ public class APIHelper  : MonoBehaviour
 [System.Serializable]
 public class Company
 {
-    public string company_id;
-    public string company_name;
+    public string companyId;
+    public string companyName;
 }
 
 [System.Serializable]
@@ -146,4 +187,10 @@ public class Quiz
 {
     public string problem;
     public bool is_true;
+}
+
+[System.Serializable]
+public class CompanyNews
+{
+    public string title;
 }

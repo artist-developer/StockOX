@@ -15,13 +15,9 @@ public class OX_MonsterStarter : MonoBehaviour {
 		
 	}
 	public void OX_MonsterGame(){
-		if(APIHelper.instance.company_code !="none"){
+		if(APIHelper.instance.GetSelectedCompanyCode() !="none"){
 			SceneManager.LoadScene("03. OX_Monster");
 		}
 		
-	}
-	public void onChangeDropdownvalue(int value){
-		Debug.Log(value);
-		APIHelper.instance.company_code = value + "";
 	}
 }
